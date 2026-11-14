@@ -1,0 +1,41 @@
+services:
+  impulse:
+    build: ./server
+    container_name: impulse-server
+    restart: unless-stopped
+    environment:
+      - PORT=3000
+      - HOST=0.0.0.0
+      - DATA_DIR=/app/data
+      - UPLOADS_DIR=/app/uploads
+      - MAX_FILE_SIZE=1073741824
+      - MAX_USER_STORAGE=${MAX_USER_STORAGE:-5368709120}
+      - CORS_ORIGINS=${CORS_ORIGINS:-}
+      - JWT_SECRET=${JWT_SECRET:-}
+      - MASTER_KEY=${MASTER_KEY:-}
+      - SMS_DEV_MODE=${SMS_DEV_MODE:-}
+    volumes:
+      - ./data:/app/data
+      - ./uploads:/app/uploads
+    expose:
+      - '3000'
+
+  caddy:
+    image: caddy:2
+    container_name: impulse-caddy
+    restart: unless-stopped
+    depends_on:
+      - impulse
+    environment:
+      - IMPULSE_DOMAIN=${IMPULSE_DOMAIN:-localhost}
+    ports:
+      - '80:80'
+      - '443:443'
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+
+volumes:
+  caddy_data:
+  caddy_config:

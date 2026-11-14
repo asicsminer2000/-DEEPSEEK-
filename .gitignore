@@ -1,0 +1,40 @@
+# Dependencies and build output
+node_modules/
+dist/
+out/
+release/
+
+# Local data and uploaded files
+# server/* — запуск из папки server; /data и /uploads — тома docker-compose.
+server/data/
+server/uploads/
+/data/
+/uploads/
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+
+# Signing and machine-local secrets
+*.jks
+*.keystore
+*.p12
+*.pfx
+keystore.properties
+local.properties
+
+# Generated Android build files (desktop/build/icon.png is kept)
+mobile/android/.gradle/
+mobile/android/build/
+mobile/android/app/build/
+mobile/android/app/src/main/assets/public/
+mobile/android/app/src/main/assets/capacitor.config.json
+mobile/android/app/src/main/assets/capacitor.plugins.json
+mobile/android/app/src/main/res/xml/config.xml
+mobile/android/capacitor-cordova-android-plugins/
+mobile/android/keystore/
+
+# Logs and OS files
+*.log
+.DS_Store
